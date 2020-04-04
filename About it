@@ -8,5 +8,4 @@ Entity name: country
 
 Design Patterns used:
 -DAO (mandatory) on The Country Classes: Country, CountryDAO and CountryDAOImpl
-
 -Singleton on/and Enum class
