@@ -10,7 +10,7 @@ public class Menu {
 	public void start() {	
 
 		//interfaceDao objt = new classDaoimpl();
-		Country ctr = new Country();
+		CountryAbs ctr = new Country.CountryAbsBuilder().build();
 		CountryDAO dao = new CountryDAOImpl();
 		CountryDAOImpl countryDao = new CountryDAOImpl();
 		ArrayList<Country> list; 

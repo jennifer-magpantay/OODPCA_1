@@ -6,6 +6,9 @@ Password: Pass1234!
 Database name: world
 Entity name: country
 
+OODPCA_1 is a second version of OODP_CA1. A TimezoneDumb error came out and bug the previous project
+
 Design Patterns used:
 -DAO (mandatory) on The Country Classes: Country, CountryDAO and CountryDAOImpl
--Singleton on/and Enum class
+-Singleton on the Database class and Enum class
+-Builder on Country/CountryAbs classes
