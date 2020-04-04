@@ -1,0 +1,12 @@
+Database access:
+Host: 52.50.23.197
+Port: 3306
+Username: cctstudent
+Password: Pass1234!
+Database name: world
+Entity name: country
+
+Design Patterns used:
+-DAO (mandatory) on The Country Classes: Country, CountryDAO and CountryDAOImpl
+
+-Singleton on/and Enum class
