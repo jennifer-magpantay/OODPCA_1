@@ -1,3 +1,7 @@
+//this class also will be used to get the variables values for the dao implemented class to create a new object of the class country
+//builder pattern is applied to this class
+//what is in here: all attributes and getters and setters
+//also includes the builder class (CountryAbsBuilder)
 
 public abstract class CountryAbs {
 	//add private variables/attributes for the class country
@@ -56,13 +60,16 @@ public abstract class CountryAbs {
 		this.headOfState = builder.headOfState;
 	}
 	
+	//so far, everything from the CountryAbs is protected
+	//from here, the only public clas/method is the inner/builder class CountryAbsBuilder
+	
 	
 	public static class CountryAbsBuilder{
-		public static String code;
-		protected String name;
-		protected String continent;  //protected static Continents continent;
-		protected float surfaceArea;
-		protected String headOfState;	
+		String code;
+		String name;
+		String continent;  //protected static Continents continent;
+		float surfaceArea;
+		String headOfState;	
 	
 		
 		
@@ -80,7 +87,7 @@ public abstract class CountryAbs {
 	}
 
 	public CountryAbs build() {
-		return new Country(this); //error!
+		return new Country(this); 
 	}
 	}
 

@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+//through this class, only this one, we will be able to access the database using just one line command
+//so: then client will access the menu, the menu will sent the client to this class and this class will communicate with the database
+
 public class CountryDAOImpl implements CountryDAO{
 	//adding the database connection & get instance of the database
 	private Connection conn; 
@@ -324,19 +327,18 @@ public class CountryDAOImpl implements CountryDAO{
 			} while (validation == false);
 		} catch (Exception e) {System.out.println("Error reading input. Try again");}		
 
-
-		//UNWANTED BUG!! IS PRINTING TWICE "HEAD OF STATE"!!??
-		//starting to record
+		//starting to record into the database
 		//open the connection
 		conn = Database.getInstance().getConnection();
-
+		
+		//selecting the query insert into
 		String query = "INSERT INTO country (Code, Name, Continent, SurfaceArea, HeadOfState) VALUES (?, ?, ?, ?, ?)";
 
 		try {
 			PreparedStatement ps = conn.prepareStatement(query);
 			ps.setString(1, myCountry.getCode());
 			ps.setString(2, myCountry.getName());
-			ps.setString(3, myCountry.getContinent()); //HOW SET THE ENUM INTO DATABASE RECORD - INSTEAD STRING???
+			ps.setString(3, myCountry.getContinent()); //HOW SET THE ENUM INTO DATABASE RECORD - INSTEAD STRING??? - yep. I added to the enum String values and use them to record info in the database
 			ps.setFloat(4, myCountry.getSurfaceArea());
 			ps.setString(5, myCountry.getHeadOfState());
 
@@ -345,9 +347,9 @@ public class CountryDAOImpl implements CountryDAO{
 
 			ps.executeUpdate();
 			//ps.execute();
-
+			
+			//message confirmation from the database recording process
 			System.out.println();
-			//JOptionPane.showMessageDialog(f,"DATABASE CONFIRMATION: New register has been added succesfully"); 
 			System.out.println(":: DATABASE CONFIRMATION: New country has been added succesfully");
 			System.out.println();
 

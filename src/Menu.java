@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
+//this is the class the user will interact with
+//each menu option has a instantiation of other class/methods that will brings the user to
 public class Menu {		
 
 	public Menu() { 
@@ -9,18 +11,17 @@ public class Menu {
 
 	public void start() {	
 
-		//interfaceDao objt = new classDaoimpl();
+		//instantiating the country classes
 		CountryAbs ctr = new Country.CountryAbsBuilder().build();
 		CountryDAO dao = new CountryDAOImpl();
-		CountryDAOImpl countryDao = new CountryDAOImpl();
 		ArrayList<Country> list; 
 
 		//add scanner method to read the user input
 		Scanner userInput = new Scanner(System.in);
-
-		//the menu will be displayed after each operation
-		String option = null; //wont allow any null value (enter)		
-
+		
+		String option = null; //wont allow any null value (enter)	
+		
+		//using the try/catch to the menu be displayed after each operation
 		try {
 			do {			
 				System.out.println("********* MENU OPTIONS *********");
