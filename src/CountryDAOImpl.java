@@ -6,7 +6,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class CountryDAOImpl implements CountryDAO{
-	//adding the database connection
+	//adding the database connection & get instance of the database
 	private Connection conn; 
 	private Database db = Database.getInstance();//should instantiate the database db to avoid java.null message!!
 
@@ -22,12 +22,14 @@ public class CountryDAOImpl implements CountryDAO{
 	public boolean isCode(String input) {	
 		Boolean isCode = input.matches("^[A-Z]{3}$"); 
 
-		//adding if statement to print error message		
+		//adding if statement to print error message	
+		//if the input is different, then print a error message
 		if (!isCode) {
 			System.out.println("Error reading input. Accepting: letters, uppercase and lenght equals to three, no longer than that. Try again");
 			System.out.println();
 			return false;
 		}
+		//if not, then will move on 
 		return isCode;	
 	}		
 
@@ -58,14 +60,16 @@ public class CountryDAOImpl implements CountryDAO{
 
 	@Override
 	public ArrayList<Country> getAllCountries() {
+		//create an arraylist to save all elements from the database and display to the user
 		ArrayList<Country> list = new ArrayList<Country>();	
 		
 		//open database connection		
 		conn = Database.getInstance().getConnection();
 		
+		//select the query to take all country names from DB rganized bt ascendent order
+		String query = "SELECT Name FROM country ORDER BY Name ASC";
+		
 		//starting the query
-		String query = "SELECT Name FROM country ORDER BY Name ASC";		
-
 		try {
 			PreparedStatement ps = conn.prepareStatement(query);
 			ResultSet rs = ps.executeQuery(); 
@@ -78,10 +82,7 @@ public class CountryDAOImpl implements CountryDAO{
 
 			//closing connection
 			db.closeConnection();
-
-		}catch( Exception e ){
-			System.out.println( e ) ;
-		}
+		}catch( Exception e ){ 	System.out.println( e ) ; }
 		return null;
 	}
 
@@ -111,17 +112,23 @@ public class CountryDAOImpl implements CountryDAO{
 
 			//executing the query select
 			ResultSet rs = ps.executeQuery();
-			System.out.println("Country found: ");
-			System.out.println("Code"+"\t"+"Country Name"+"\t"+"Continent"+"\t"+"Surface Area"+"\t"+"Head Of State");
-			while (rs.next()) {
+			
+			//addin here and if else statement to print a message in case the element was not found		
+			 //while(rs.next()) { }
+			if((rs.next())) {				 			
+				System.out.println("Country found: ");
+				System.out.println("Code"+"\t"+"Country Name"+"\t"+"Continent"+"\t"+"Surface Area"+"\t"+"Head Of State");
 				System.out.println(rs.getString("Code")+"\t"+rs.getString("Name")+"\t"+rs.getString("Continent")+"\t"+rs.getFloat("SurfaceArea")+"\t"+rs.getString("HeadOfState"));
+			}			
+			else {
+				System.out.println("Country found: ");				
 			}
-			System.out.println();			
+			
+			System.out.println();
+			
 			//closing connection
 			db.closeConnection();
-		}catch( Exception se ){
-			System.out.println( se ); 
-		}
+		}catch( Exception se ){ System.out.println( se ); }
 		return c;			
 	}
 
@@ -151,13 +158,18 @@ public class CountryDAOImpl implements CountryDAO{
 
 			//executing the query select
 			ResultSet rs = ps.executeQuery();
-
+			
+			//adding if-else statements
+			if(rs.next()) {
 			System.out.println("Country Code found: ");
 			System.out.println("Code"+"\t"+"Country Name"+"\t"+"Continent"+"\t"+"Surface Area"+"\t"+"Head Of State");
-			while (rs.next()) {
-				System.out.println(rs.getString("Code")+"\t"+rs.getString("Name")+"\t"+rs.getString("Continent")+"\t"+rs.getFloat("SurfaceArea")+"\t"+rs.getString("HeadOfState"));
+			System.out.println(rs.getString("Code")+"\t"+rs.getString("Name")+"\t"+rs.getString("Continent")+"\t"+rs.getFloat("SurfaceArea")+"\t"+rs.getString("HeadOfState"));
 			}
-			System.out.println();			
+			else {
+				System.out.println("Country Code not found");
+			}
+			System.out.println();
+			
 			//closing connection
 			db.closeConnection();
 		}catch( Exception se ){
